@@ -33,9 +33,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
     "https://yourdomain.com",  # If deployed on a real domain
 ]
-import os
-ALLOWED_HOSTS = ["chaithu_app.onrender.com"]
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
+
 
 import dj_database_url
 DATABASES = {
