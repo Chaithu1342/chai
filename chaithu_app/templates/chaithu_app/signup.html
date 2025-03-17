@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        /* Fullscreen Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background with Zoom Animation */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{% static 'images/1742027588579.webp' %}") no-repeat center center/cover;
+            z-index: -1;
+            animation: zoomBackground 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes zoomBackground {
+            0% { transform: scale(1); }  
+            50% { transform: scale(1.1); } 
+            100% { transform: scale(1); } 
+        }
+
+        /* Signup Box */
+        .container {
+            background: white; /* Changed to white */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 24px;
+            color: black; /* Changed to black */
+            margin-bottom: 20px;
+        }
+
+        /* Input Fields */
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            color: black; /* Changed to black */
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background: black; /* Changed to black */
+            color: white; /* White text for contrast */
+        }
+
+        input::placeholder {
+            color: lightgray; /* Light gray placeholder text */
+        }
+
+        /* Buttons */
+        .signup-btn {
+            width: 100%;
+            padding: 12px;
+            background: green;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .signup-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Error Messages */
+        .error-messages {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background"></div> <!-- Moving Background -->
+    <div class="container">
+        <h1>Signup Page</h1>
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="signup-btn">Signup</button>
+        </form>
+
+        <!-- Display Django error messages -->
+        {% if messages %}
+            <div class="error-messages">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
