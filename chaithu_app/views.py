@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -10,7 +9,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 def index(request):
     return render(request, "chaithu_app/index.html")  # Ensure this template exists
 
-# ✅ User Signup
+# ✅ User Signup (Redirects to Dashboard)
 def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -26,14 +25,13 @@ def signup(request):
             return redirect("signup")
 
         user = User.objects.create_user(username=username, password=password)
-        user.save()
-        login(request, user)
+        login(request, user)  # ✅ Log the user in immediately after signup
         messages.success(request, "Signup successful! Redirecting to dashboard.")
-        return redirect("dashboard")
+        return redirect("dashboard")  # ✅ Redirect to dashboard
 
     return render(request, "chaithu_app/signup.html")
 
-# ✅ User Login (Only One Login Function)
+# ✅ User Login (Redirects to Dashboard)
 @ensure_csrf_cookie  
 def user_login(request):
     if request.method == "POST":
@@ -43,11 +41,9 @@ def user_login(request):
         
         if user is not None:
             login(request, user)
-            print("User authenticated, redirecting...")  # Debugging log
-            return redirect("dashboard")  # Ensure "dashboard" exists in urls.py
+            return redirect("dashboard")  # ✅ Redirect to dashboard after login
         else:
-            print("Login failed!")  # Debugging log
-            messages.error(request, "Invalid username or password")
+            messages.error(request, "Invalid username or password.")
     
     return render(request, "chaithu_app/login.html")  # Ensure this template exists
 
@@ -59,7 +55,7 @@ def user_logout(request):
 # ✅ Dashboard (Requires Login)
 @login_required
 def dashboard(request):
-    return render(request, "chaithu_app/dashboard.html")
+    return render(request, "chaithu_app/dashboard.html")  # Ensure this template exists
 
 # ✅ Profile (Requires Login)
 @login_required
