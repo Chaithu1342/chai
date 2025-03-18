@@ -1,24 +1,15 @@
+from django.contrib import admin
 from django.urls import path
-from chaithu_app import views  # Import views from your app
+from chaithu_app.views import index, signup, user_login, user_logout, dashboard, profile, reports, settings
 
 urlpatterns = [
-    path("", views.index, name="index"),  # ✅ First page should be "index"
-    path("signup/", views.signup, name="signup"),
-    path("login/", views.user_login, name="login"),
-    path("logout/", views.user_logout, name="logout"),
-    path("dashboard/", views.dashboard, name="dashboard"),
-    path("profile/", views.profile, name="profile"),
-    path("reports/", views.reports, name="reports"),
-    path("settings/", views.settings, name="settings"),
+    path("", index, name="index"),
+    path("signup/", signup, name="signup"),
+    path("login/", user_login, name="login"),  # Ensure function-based login is used
+    path("logout/", user_logout, name="logout"),
+    path("dashboard/", dashboard, name="dashboard"),
+    path("profile/", profile, name="profile"),
+    path("reports/", reports, name="reports"),
+    path("settings/", settings, name="settings"),
+    path("admin/", admin.site.urls),  # Keep this line to access Django admin
 ]
-from django.contrib.auth.views import LoginView
-
-urlpatterns = [
-    path("login/", LoginView.as_view(template_name="login.html"), name="login"),
-]
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
-@login_required
-def dashboard(request):
-    return render(request, "dashboard.html")
