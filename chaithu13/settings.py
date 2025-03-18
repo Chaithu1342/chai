@@ -19,6 +19,14 @@ TEMPLATE_DIR= "templates"/BASE_DIR
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 
+import os
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Static files directory
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For production
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/

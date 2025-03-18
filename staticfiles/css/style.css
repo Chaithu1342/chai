@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("{% static "C:\Users\murik\Documents\chaithu aws course\mydjango\chaithu13\static\images\1742027588579.webp" %}");
+
+/* Centered login box */
+.login-container {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    width: 300px;
+}
+
+h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* Form fields */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+button {
+    background: #ff9800;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #e68900;
+}
