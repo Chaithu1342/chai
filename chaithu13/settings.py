@@ -106,9 +106,22 @@ WSGI_APPLICATION = 'chaithu13.wsgi.application'
 import dj_database_url
 import os
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-}
+import os
+import dj_database_url
+
+DATABASE_URL = os.getenv('postgresql://chaithu13_user:f7xh6MeNlAHxnAHpsj1kC1FtXKuDW96D@dpg-cv78kmt2ng1s7382ri3g-a/chaithu13')  # Fetch DATABASE_URL from environment variables
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL, engine='django.db.backends.postgresql')
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',  # Fallback to SQLite (for local development)
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 
