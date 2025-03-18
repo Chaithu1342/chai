@@ -175,4 +175,10 @@ LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/dashboard/"
 LOGOUT_REDIRECT_URL = "/login/"
 
+LOGIN_REDIRECT_URL = "/dashboard/"  # Redirects after login
+LOGOUT_REDIRECT_URL = "/login/"  # Redirects after logout
+CSRF_TRUSTED_ORIGINS = [
+    "https://your-render-url.onrender.com",
+    "https://your-custom-domain.com",
+]
 

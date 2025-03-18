@@ -72,3 +72,55 @@ def reports(request):
 @login_required
 def settings(request):
     return render(request, "chaithu_app/settings.html")
+from django.shortcuts import redirect
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
+
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect("dashboard")  # Change to your redirect page
+        else:
+            messages.error(request, "Invalid username or password")
+    
+    return render(request, "login.html")
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            print("User authenticated, redirecting...")  # Debugging line
+            return redirect("dashboard")  # Ensure this matches a URL pattern
+        else:
+            print("Login failed!")  # Debugging line
+            messages.error(request, "Invalid username or password")
+    
+    return render(request, "login.html")
+from django.contrib.auth.views import LoginView
+
+urlpatterns = [
+    path("login/", LoginView.as_view(template_name="login.html"), name="login"),
+]
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            print("User authenticated, redirecting...")  # Debugging line
+            return redirect("dashboard")  # Ensure this matches a URL pattern
+        else:
+            print("Login failed!")  # Debugging line
+            messages.error(request, "Invalid username or password")
+    
+    return render(request, "login.html")
