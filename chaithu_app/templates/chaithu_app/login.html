@@ -72,7 +72,16 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form method="POST">
+
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li style="color: red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="id_username">Username:</label>

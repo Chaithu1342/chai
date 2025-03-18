@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.contrib.auth.models import User
 
-# ✅ First Page (Index)
+# ✅ Home Page
 def index(request):
-    return render(request, "chaithu_app/index.html")  # Ensure this template exists
+    return render(request, "chaithu_app/index.html")
 
-# ✅ User Signup (Redirects to Dashboard)
+# ✅ Signup View
 def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -25,49 +25,50 @@ def signup(request):
             return redirect("signup")
 
         user = User.objects.create_user(username=username, password=password)
-        login(request, user)  # ✅ Log the user in immediately after signup
-        messages.success(request, "Signup successful! Redirecting to dashboard.")
-        return redirect("dashboard")  # ✅ Redirect to dashboard
+        login(request, user)  # ✅ Auto-login after signup
+        messages.success(request, "Signup successful!")
+        return redirect("dashboard")  # ✅ Redirect to dashboard after signup
 
     return render(request, "chaithu_app/signup.html")
 
-# ✅ User Login (Redirects to Dashboard)
+# ✅ Login View
 @ensure_csrf_cookie  
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
-        
+
         if user is not None:
             login(request, user)
+            messages.success(request, "Login successful!")
             return redirect("dashboard")  # ✅ Redirect to dashboard after login
         else:
-            messages.error(request, "Invalid username or password.")
-    
-    return render(request, "chaithu_app/login.html")  # Ensure this template exists
+            messages.error(request, "Invalid username or password")
 
-# ✅ User Logout
+    return render(request, "chaithu_app/login.html")
+
+# ✅ Logout View
 def user_logout(request):
     logout(request)
-    return redirect("index")  # Redirect to index after logout
+    return redirect("index")  # ✅ Redirect to home after logout
 
-# ✅ Dashboard (Requires Login)
+# ✅ Dashboard View (Requires Login)
 @login_required
 def dashboard(request):
-    return render(request, "chaithu_app/dashboard.html")  # Ensure this template exists
+    return render(request, "chaithu_app/dashboard.html")
 
-# ✅ Profile (Requires Login)
+# ✅ Profile View (Requires Login)
 @login_required
 def profile(request):
     return render(request, "chaithu_app/profile.html")
 
-# ✅ Reports (Requires Login)
+# ✅ Reports View (Requires Login)
 @login_required
 def reports(request):
     return render(request, "chaithu_app/reports.html")
 
-# ✅ Settings (Requires Login)
+# ✅ Settings View (Requires Login)
 @login_required
 def settings(request):
     return render(request, "chaithu_app/settings.html")

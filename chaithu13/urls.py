@@ -8,11 +8,11 @@ from chaithu_app.views import (
 urlpatterns = [
     path("", index, name="index"),
     path("signup/", signup, name="signup"),
-    path("login/", user_login, name="login"),
+    path("login/", user_login, name="login"),  # ✅ Ensure this name is correct
     path("logout/", user_logout, name="logout"),
-    path("dashboard/", dashboard, name="dashboard"),
+    path("dashboard/", dashboard, name="dashboard"),  # ✅ Redirects here
     path("profile/", profile, name="profile"),
     path("reports/", reports, name="reports"),
     path("settings/", settings, name="settings"),
-    path("admin/", admin.site.urls),  # ✅ Keep this to access Django admin
+    path("admin/", admin.site.urls),
 ]
