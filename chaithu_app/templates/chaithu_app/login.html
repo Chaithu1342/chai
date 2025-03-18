@@ -8,21 +8,22 @@
     <style>
         /* ✅ Full-screen background */
         body {
-            background: url("{% 'https://images.app.goo.gl/2EKcsSqAiPCsaBuW6' %}") no-repeat center center fixed;
+            background: url("https://img.freepik.com/free-vector/asteroid-space-background_1308-33879.jpg?semt=ais_hybrid") no-repeat center center fixed;
             background-size: cover;
             font-family: Arial, sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin: 0;
         }
 
         /* ✅ Black Login Box */
         .login-container {
             width: 450px;
             padding: 40px;
-            background: #000; /* Black background */
-            color: #fff; /* White text */
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+            color: #fff;
             border-radius: 12px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
             text-align: center;
@@ -40,7 +41,7 @@
 
         /* ✅ Properly aligned input fields */
         input {
-            width: calc(100% - 24px); /* Makes inputs aligned */
+            width: calc(100% - 24px);
             padding: 12px;
             margin-top: 5px;
             border: 1px solid #ccc;

@@ -1,6 +1,12 @@
 {% extends 'chaithu_app/base.html' %}  <!-- Make sure base.html exists -->
 
 {% block content %}
-    <h1>Welcome to the Dashboard</h1>
-    <p>This is your dashboard.</p>
+
+     <h1>Welcome, {{ user.username }}!</h1>
+     <p>This is your personalized dashboard where you can manage your account.</p>
+     <p>Explore the sidebar for more options.</p>
+         <form action="{% url 'logout' %}" method="post">
+             {% csrf_token %}
+                <button class="logout-btn" type="submit">Logout</button>
+         </form>
 {% endblock %}
