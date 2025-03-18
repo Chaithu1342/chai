@@ -8,7 +8,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 # ✅ First Page (Index)
 def index(request):
-    return render(request, "chaithu_app/index.html")  # Ensure index.html exists
+    return render(request, "chaithu_app/index.html")  # Ensure this template exists
 
 # ✅ User Signup
 def signup(request):
@@ -33,20 +33,23 @@ def signup(request):
 
     return render(request, "chaithu_app/signup.html")
 
-# ✅ User Login
-@ensure_csrf_cookie  # Ensures CSRF token is included in login page
+# ✅ User Login (Only One Login Function)
+@ensure_csrf_cookie  
 def user_login(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
             login(request, user)
-            return redirect("dashboard")
+            print("User authenticated, redirecting...")  # Debugging log
+            return redirect("dashboard")  # Ensure "dashboard" exists in urls.py
         else:
-            messages.error(request, "Invalid username or password.")
-
-    form = AuthenticationForm()
-    return render(request, "chaithu_app/login.html", {"form": form})
+            print("Login failed!")  # Debugging log
+            messages.error(request, "Invalid username or password")
+    
+    return render(request, "chaithu_app/login.html")  # Ensure this template exists
 
 # ✅ User Logout
 def user_logout(request):
@@ -72,55 +75,3 @@ def reports(request):
 @login_required
 def settings(request):
     return render(request, "chaithu_app/settings.html")
-from django.shortcuts import redirect
-from django.contrib.auth import login, authenticate
-from django.contrib import messages
-
-def user_login(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None:
-            login(request, user)
-            return redirect("dashboard")  # Change to your redirect page
-        else:
-            messages.error(request, "Invalid username or password")
-    
-    return render(request, "login.html")
-def user_login(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None:
-            login(request, user)
-            print("User authenticated, redirecting...")  # Debugging line
-            return redirect("dashboard")  # Ensure this matches a URL pattern
-        else:
-            print("Login failed!")  # Debugging line
-            messages.error(request, "Invalid username or password")
-    
-    return render(request, "login.html")
-from django.contrib.auth.views import LoginView
-
-urlpatterns = [
-    path("login/", LoginView.as_view(template_name="login.html"), name="login"),
-]
-def user_login(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None:
-            login(request, user)
-            print("User authenticated, redirecting...")  # Debugging line
-            return redirect("dashboard")  # Ensure this matches a URL pattern
-        else:
-            print("Login failed!")  # Debugging line
-            messages.error(request, "Invalid username or password")
-    
-    return render(request, "login.html")
